@@ -7,7 +7,7 @@ interface TodoItem {
   content: string;
   priority: number;
   completed: boolean;
-  addedDate: string;
+  added_date: string;
 }
 const Stars = ({ count }) => {
   // 创建一个数组来存储星星组件
@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(() => {
     axios.get('http://localhost:3001/todos')
-      .then(response => setTodos(response.data))
+      .then(response => setTodos(response.data.map((todo: TodoItem) => (todo.added_date = new Date().toISOString().split('T')[0], todo))))
       .catch(error => console.error('Error fetching todos:', error));
   }, []);
 
@@ -116,7 +116,7 @@ export default function App() {
         <div style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
           <p className="text-lg">{todo.content}</p>
           <p className="text-sm text-gray-500">
-            Added on {todo.addedDate ? todo.addedDate : "Loading date..."}
+            Added on {todo.added_date ? todo.added_date : "Loading date..."}
           </p>
           <Stars count={todo.priority} />
         </div>

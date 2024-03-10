@@ -21,7 +21,6 @@ app.get('/todos', async (req, res) => {
   try {
     const todos = await pool.query('SELECT * FROM todos ORDER BY id ASC');
     res.json(todos.rows);
-    console.log('todos', todos)
   } catch (error) {
     res.status(500).send(error.message);
   }
